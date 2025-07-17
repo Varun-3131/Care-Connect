@@ -15,7 +15,7 @@ const Navbar = () => {
         <div className=" flex items-center justify-between text-sm py-4 mb-5 border-b border-black-200">
 
             <Link to="/" className="flex items-center gap-2.5 hover:opacity-80 transition-all">
-                <h1 className="text-lg font-bold">Care Connect!</h1>
+                <h1 onClick={()=>navigate('/')} className="text-lg font-bold">Care Connect!</h1>
             </Link>
 
             <ul className="hidden md:flex items-start gap-5 font-medium">
