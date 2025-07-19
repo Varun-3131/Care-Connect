@@ -8,7 +8,7 @@ const Footer = () => {
 
                 {/*LEFT SECTION*/}
                 <div>
-                    <h1 className="text-lg font-bold">Care Connect!</h1>
+                    <img className="mb-5 w-30" src={assets.logo}/>
                     <p className="w-full md:w-2/3 text-gray-600 leading-6">Description of the app in 30 words</p>
                 </div>
 
