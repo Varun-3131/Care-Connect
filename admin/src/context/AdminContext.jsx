@@ -1,32 +1,51 @@
-import React,{createContext, useState} from "react";
+import React, {createContext, useState} from "react";
 import axios from "axios";
 import {toast} from "react-toastify";
-import {data} from "react-router-dom";
+
 export const AdminContext = createContext();
-const AdminContextProvider= (props)=>{
 
-    const [aToken,setAToken]=useState(localStorage.getItem("aToken") ? localStorage.getItem("aToken") : "");
-    const backendUrl=import.meta.env.VITE_BACKEND_URL;
-    const [doctors,setDoctors]=useState([]);
+const AdminContextProvider = (props) => {
+
+    const [aToken, setAToken] = useState(localStorage.getItem("aToken") ? localStorage.getItem("aToken") : "");
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const [doctors, setDoctors] = useState([]);
     const getAllDoctors = async () => {
-        try{
+        try {
 
-            const {data}= await axios.post(backendUrl+"/api/admin/all-doctors", {},{headers:{aToken}})
-            if(data.success){
+            const {data} = await axios.post(backendUrl + "/api/admin/all-doctors", {}, {headers: {aToken}})
+            if (data.success) {
                 setDoctors(data.doctors);
                 console.log(data.doctors);
-            }else {
+            } else {
                 toast.error(data.message);
             }
 
-        }catch(err){
+        } catch (err) {
             toast.error(err.message);
 
         }
     }
 
-    const value={
-        aToken,setAToken,backendUrl,doctors,getAllDoctors
+    const changeAvailability = async (docId) => {
+        try {
+            const {data} = await axios.post(
+                backendUrl + "/api/admin/change-availability",
+                {docId},
+                {headers: {aToken}}
+            );
+            if (data.success) {
+                toast.success(data.message);
+                getAllDoctors();
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+
+    const value = {
+        aToken, setAToken, backendUrl, doctors, getAllDoctors,changeAvailability,
     }
 
     return (
