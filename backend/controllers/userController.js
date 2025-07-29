@@ -50,6 +50,7 @@ const loginUser = async (req, res) => {
 
         const {email, password} = req.body;
         const user = await userModel.findOne({email})
+
         if (!user) {
             return res.json({success: false, message: "Invalid Credentials."});
         }
@@ -70,4 +71,25 @@ const loginUser = async (req, res) => {
 
 }
 
-export default {registerUser, loginUser};
+const getProfile = async (req, res) => {
+
+    try{
+
+        const {userId} = req.body;
+        const userData= await userModel.findById(userId).select('-password');
+
+        res.json({success: true, userData})
+
+    }
+    catch(err){
+
+        console.log(err);
+        return res.json({success: false, message: "Something went wrong."});
+
+    }
+
+}
+
+
+
+export {registerUser, loginUser,getProfile};
