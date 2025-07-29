@@ -1,22 +1,22 @@
 import jwt from 'jsonwebtoken'
 
-const authUser=(req,res,next)=>{
+const authUser = (req, res, next) => {
 
-    try{
+    try {
 
-        const {token}=req.headers
+        const {token} = req.headers
 
-        if(!token){
-            return res.json({message: "No token provided",success:false})
+        if (!token) {
+            return res.json({message: "No token provided", success: false})
         }
 
-        const tokenDecode=jwt.verify(token, process.env.JWT_SECRET)
+        const tokenDecode = jwt.verify(token, process.env.JWT_SECRET)
 
-        req.body.userId=tokenDecode.id;
+        req.body.userId = tokenDecode.id;
 
         next()
 
-    }catch(err){
+    } catch (err) {
 
         console.log(err)
         res.status(400).json({message: err.message})
